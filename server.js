@@ -16,7 +16,9 @@ app.use(cors());
 app.use('/my-uploads', express.static('my-uploads'));
 
 app.use("/user", router);
-
+app.get("/", (req, res) => {
+    res.send("Backend is running 🚀");
+});
 // app.listen(5000, () => {
 //     console.log("Server started successfully on port 5000");
 // });
