@@ -4,6 +4,7 @@ import cors from 'cors';
 import router from './routers.js';
 import dotenv from "dotenv";
 dotenv.config();
+connect();
 const app = express();
 
 app.use(express.json());
