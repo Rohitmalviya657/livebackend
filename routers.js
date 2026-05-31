@@ -12,7 +12,7 @@ import { verifyToken } from './Auth.js';
 
 const router = express.Router();
 
-router.post("/create", upload.single("image"), Create);
+router.post("/create", Create);
 router.post("/login", login);
 router.put("/update-image", verifyToken, upload.single("image"), updateImageByEmail);
 router.get("/all", verifyToken, getAllUsers);

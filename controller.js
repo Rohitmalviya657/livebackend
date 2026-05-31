@@ -2,11 +2,7 @@ import { User } from "./model.js";
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 export const Create = async (req, res) => {
-    console.log("hitting or not===========");
-
     const { name, email, password } = req.body;
-    const image = req.file?.filename;
-
 
     try {
         const userExists = await User.findOne({ email });
@@ -21,15 +17,18 @@ export const Create = async (req, res) => {
             name,
             email,
             password: hashedPassword,
-            image
+            image: ""
         });
 
         await newUser.save();
 
-        res.status(200).json({ msg: "Registered successfully", user: newUser });
+        res.status(200).json({
+            msg: "Registered successfully",
+            user: newUser
+        });
 
     } catch (error) {
-        console.error("Something went wrong:", error);
+        console.log(error);
         res.status(500).json({ msg: "Server error" });
     }
 };
