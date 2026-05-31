@@ -20,3 +20,4 @@ app.use("/user", router);
 // app.listen(5000, () => {
 //     console.log("Server started successfully on port 5000");
 // });
+export default app
