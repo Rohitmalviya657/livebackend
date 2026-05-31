@@ -10,26 +10,16 @@
 // })
 
 let isConnected = false;
-export const connect = async function connectToMongoDB() {
+import mongoose from "mongoose";
 
+export const connect = async () => {
     try {
+        console.log("MONGO_URI exists:", !!process.env.MONGO_URI);
 
-        await mongoose.connect(process.env.MONGO_URI, {
+        await mongoose.connect(process.env.MONGO_URI);
 
-            useNewUrlParser: true,
-
-            useUnifiedTopology: true
-
-        });
-
-        isConnected = true;
-
-        console.log('Connected to MongoDB');
-
+        console.log("MongoDB Connected");
     } catch (error) {
-
-        console.error('Error connecting to MongoDB:', error); I
-
+        console.error("MongoDB Error:", error);
     }
-
-}
+};
