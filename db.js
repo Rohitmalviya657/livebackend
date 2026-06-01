@@ -1,25 +1,22 @@
-// import mongoose from 'mongoose';
-// export const connect = mongoose.connect("mongodb://localhost:27017/Codiant", {
-
-// }).then(() => {
-//     console.log("databse connected Succes");
-
-// }).catch(() => {
-//     console.log("something went rong");
-
-// })
-
-let isConnected = false;
 import mongoose from "mongoose";
 
+let cached = global.mongoose;
+
+if (!cached) {
+    cached = global.mongoose = { conn: null, promise: null };
+}
+
 export const connect = async () => {
+    if (cached.conn) return cached.conn;
+
     try {
-        console.log("MONGO_URI exists:", !!process.env.MONGO_URI);
+        if (!cached.promise) {
+            cached.promise = mongoose.connect(process.env.MONGO_URI).then((m) => m);
+        }
 
-        await mongoose.connect(process.env.MONGO_URI);
-
-        console.log("MongoDB Connected");
-    } catch (error) {
-        console.error("MongoDB Error:", error);
+        cached.conn = await cached.promise;
+        return cached.conn;
+    } catch (err) {
+        console.log("MongoDB Connection Error:", err);
     }
 };
