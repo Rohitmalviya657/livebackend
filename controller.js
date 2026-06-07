@@ -8,13 +8,20 @@ export const Create = async (req, res) => {
     await connect();   // 🔥 MUST
 
     try {
-        const existing = await User.findOne({ email: req.body.email });
+
+
+        let { email, password } = req.body;
+        const existing = await User.findOne({ email });
 
         if (existing) {
             return res.status(400).json({ message: "User exists" });
         }
+        const pass = await bcrypt.hash(password, 10);
 
-        const user = await User.create(req.body);
+        const user = new User({
+            email, password
+        })
+        await user.save();
 
         res.status(201).json(user);
     } catch (err) {
