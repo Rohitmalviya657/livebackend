@@ -19,7 +19,7 @@ export const Create = async (req, res) => {
         const pass = await bcrypt.hash(password, 10);
 
         const user = new User({
-            email, password
+            email, password: pass
         })
         await user.save();
 
