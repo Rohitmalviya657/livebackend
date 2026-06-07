@@ -32,6 +32,7 @@ export const Create = async (req, res) => {
 
 
 export const login = async (req, res) => {
+    await connect();
     let { email, password } = req.body;
     console.log("Received body:", req.body);
 
